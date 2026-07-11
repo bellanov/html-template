@@ -93,26 +93,33 @@ describe('HTMX Template Server', () => {
   });
 
   describe('GET /api/counter', () => {
-    it('should return incremented counter value', async () => {
-      const res = await request(app).get('/api/counter?count=0');
+    beforeEach(() => {
+      app.resetCounter();
+    });
+
+    it('should increment counter by the count parameter', async () => {
+      const res = await request(app).get('/api/counter?count=1');
       expect(res.statusCode).toBe(200);
       expect(res.text).toBe('1');
     });
 
-    it('should increment from any given count', async () => {
-      const res = await request(app).get('/api/counter?count=5');
+    it('should handle decrement (negative count)', async () => {
+      // Start with 5
+      await request(app).get('/api/counter?count=5');
+      // Then decrement by 2
+      const res = await request(app).get('/api/counter?count=-2');
       expect(res.statusCode).toBe(200);
-      expect(res.text).toBe('6');
+      expect(res.text).toBe('3');
     });
 
-    it('should handle default count of 0', async () => {
+    it('should handle default count of 0 (no change)', async () => {
       const res = await request(app).get('/api/counter');
       expect(res.statusCode).toBe(200);
-      expect(res.text).toBe('1');
+      expect(res.text).toBe('0');
     });
 
     it('should return a string response', async () => {
-      const res = await request(app).get('/api/counter?count=10');
+      const res = await request(app).get('/api/counter?count=0');
       expect(typeof res.text).toBe('string');
     });
   });

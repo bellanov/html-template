@@ -4,6 +4,9 @@ const path = require('path');
 const app = express();
 const PORT = process.env.PORT || 3000;
 
+// In-memory state (for demo purposes only)
+let counterState = 0;
+
 // Middleware
 app.use(express.static(path.join(__dirname, '../public')));
 app.use(express.urlencoded({ extended: true }));
@@ -76,8 +79,9 @@ app.delete('/api/todos/:id', (req, res) => {
 
 // API: Get counter value (for AJAX interactions)
 app.get('/api/counter', (req, res) => {
-  const count = req.query.count || 0;
-  res.send((parseInt(count) + 1).toString());
+  const increment = parseInt(req.query.count) || 0;
+  counterState += increment;
+  res.send(counterState.toString());
 });
 
 // Error handling middleware
@@ -93,5 +97,10 @@ if (require.main === module) {
     console.log(`HTMX Template server running on http://localhost:${PORT}`); // eslint-disable-line no-console
   });
 }
+
+// Export reset function for testing
+app.resetCounter = () => {
+  counterState = 0;
+};
 
 module.exports = app;

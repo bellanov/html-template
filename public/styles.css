@@ -223,13 +223,11 @@ main {
 .htmx-request.htmx-settling .htmx-swapping {
   opacity: 0;
   transition: opacity 200ms ease-out;
-  swapping: 0s;
 }
 
 .htmx-request.htmx-settling .htmx-added {
   opacity: 0;
   transition: opacity 200ms ease-out;
-  settling: 20ms;
 }
 
 /* Footer */

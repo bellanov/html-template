@@ -1,34 +1,34 @@
-const request = require('supertest');
-const app = require('../src/server');
+const request = require("supertest");
+const app = require("../src/server");
 
-describe('HTML Template Server', () => {
-  describe('GET /', () => {
-    it('should return the simplified home page', async () => {
-      const res = await request(app).get('/');
+describe("HTML Template Server", () => {
+  describe("GET /", () => {
+    it("should return the simplified home page", async () => {
+      const res = await request(app).get("/");
       expect(res.statusCode).toBe(200);
-      expect(res.text).toContain('<!DOCTYPE html>');
-      expect(res.text).toContain('<h1>HTML Template</h1>');
-      expect(res.text).toContain('<p>Hello World!!!</p>');
+      expect(res.text).toContain("<!DOCTYPE html>");
+      expect(res.text).toContain("<h1>HTML Template</h1>");
+      expect(res.text).toContain("<p>Hello World!!!</p>");
     });
 
-    it('should not include the old HTMX demo script', async () => {
-      const res = await request(app).get('/');
-      expect(res.text).not.toContain('htmx.org');
+    it("should not include the old HTMX demo script", async () => {
+      const res = await request(app).get("/");
+      expect(res.text).not.toContain("htmx.org");
     });
   });
 
-  describe('Static Files', () => {
-    it('should serve the CSS stylesheet', async () => {
-      const res = await request(app).get('/styles.css');
+  describe("Static Files", () => {
+    it("should serve the CSS stylesheet", async () => {
+      const res = await request(app).get("/styles.css");
       expect(res.statusCode).toBe(200);
-      expect(res.type).toContain('css');
+      expect(res.type).toContain("css");
     });
   });
 
-  describe('Content Type Headers', () => {
-    it('should return HTML content for the home page', async () => {
-      const res = await request(app).get('/');
-      expect(res.headers['content-type']).toContain('text/html');
+  describe("Content Type Headers", () => {
+    it("should return HTML content for the home page", async () => {
+      const res = await request(app).get("/");
+      expect(res.headers["content-type"]).toContain("text/html");
     });
   });
 });

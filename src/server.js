@@ -1,5 +1,5 @@
-const express = require('express');
-const path = require('path');
+const express = require("express");
+const path = require("path");
 
 const app = express();
 const PORT = process.env.PORT || 3000;
@@ -8,15 +8,15 @@ const PORT = process.env.PORT || 3000;
 let counterState = 0;
 
 // Middleware
-app.use(express.static(path.join(__dirname, '../public')));
+app.use(express.static(path.join(__dirname, "../public")));
 app.use(express.urlencoded({ extended: true }));
-app.set('view engine', 'html');
-app.set('views', path.join(__dirname, '../views'));
+app.set("view engine", "html");
+app.set("views", path.join(__dirname, "../views"));
 
 // Custom view engine to render HTML files
-app.engine('html', (filepath, options, callback) => {
-  const fs = require('fs');
-  fs.readFile(filepath, 'utf8', (err, content) => {
+app.engine("html", (filepath, options, callback) => {
+  const fs = require("fs");
+  fs.readFile(filepath, "utf8", (err, content) => {
     if (err) return callback(err);
     return callback(null, content);
   });
@@ -25,8 +25,14 @@ app.engine('html', (filepath, options, callback) => {
 // Routes
 
 // Home page
-app.get('/', (req, res) => {
-  res.render('index.html');
+app.get("/", (req, res) => {
+  res.render("index.html");
 });
+
+if (require.main === module) {
+  app.listen(PORT, () => {
+    console.log(`Server running on http://localhost:${PORT}`);
+  });
+}
 
 module.exports = app;

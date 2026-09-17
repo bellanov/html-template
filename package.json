@@ -1,15 +1,15 @@
 {
   "name": "html-template",
   "version": "1.0.0",
-  "description": "A template showing good design patterns with developing in HTML using HTMX.",
+  "description": "Templates for developing web applications with HTMX, HTML, CSS, and Node.js/Express.",
   "main": "src/server.js",
   "scripts": {
     "start": "node src/server.js",
     "dev": "nodemon src/server.js",
     "test": "jest --coverage",
     "test:watch": "jest --watch",
-    "format": "eslint src --fix; npx prettier --write .",
-    "lint": "eslint src ; npx prettier --check ."
+    "format": "eslint src --fix; npx prettier --write views/*.html *.md",
+    "lint": "eslint src; npx prettier --check views/*.html *.md"
   },
   "keywords": [
     "htmx",
